@@ -1,84 +1,84 @@
-# TokenizedStockBuying Smart Contract
 
+# StockTokenization Smart Contract
 
-![ Details](desc.jpg)
-
+[ Details](desc.jpg)
 
 ## Overview
 
-The `TokenizedStockBuying` smart contract is a Solidity-based smart contract for managing the buying and selling of stocks on the Ethereum blockchain. It allows users to buy stocks, mark them as sold, and view stock details and all stocks owned by a user.
+The `StockTokenization` smart contract is a Solidity-based contract designed to facilitate the purchase and transfer of tokenized stocks on the Ethereum blockchain. It allows users (referred to as "investors") to purchase stocks, transfer them, and view details of their stock holdings.
 
 ## Contract Features
 
-- **Buy Stocks**: Users can purchase stocks by specifying the stock name, quantity, price, and mobile number.
-- **Sell Stocks**: Users can mark their stocks as sold.
-- **Get Stock Details**: Retrieve details of a specific stock purchase.
-- **Get User Stocks**: Retrieve all stocks purchased by a specific user.
+- **Purchase Stocks**: Investors can buy stocks by specifying the stock name, quantity, amount paid, and contact number.
+- **Transfer Stocks**: Investors can mark their stocks as transferred.
+- **View Stock Details**: Retrieve detailed information about a specific stock purchase.
+- **View Investor Stocks**: Retrieve all stocks purchased by a specific investor.
 
 ## Contract Structure
 
-### `Buyer` Struct
+### `Investor` Struct
 
-The `Buyer` struct represents details about a stock purchase:
-- `bytes32 buyerID`: Unique identifier for the stock purchase.
-- `uint256 price`: Price of the stock at the time of purchase.
-- `uint256 quantity`: Quantity of the stock purchased.
-- `string stock`: Name of the stock.
-- `bool sold`: Indicates whether the stock has been sold.
-- `uint256 mobileNumber`: Mobile number associated with the purchase.
+The `Investor` struct holds details about each stock purchase:
+- `bytes32 id`: A unique identifier for the stock purchase.
+- `uint256 amountPaid`: The amount paid for the stock at the time of purchase.
+- `uint256 stockQuantity`: The quantity of the stock purchased.
+- `string stockName`: The name of the stock purchased.
+- `bool isTransferred`: Indicates whether the stock has been transferred.
+- `uint256 contactNumber`: The contact number associated with the purchase.
 
 ### State Variables
 
-- `uint256 public buyerCounter`: Counter used to generate unique buyer IDs.
-- `mapping(bytes32 => Buyer) public buyers`: Maps `buyerID` to `Buyer` details.
-- `mapping(address => bytes32[]) public userStocks`: Maps user addresses to arrays of `buyerID`s.
+- `uint256 public totalInvestors`: Counter that tracks the total number of investors, used to generate unique IDs.
+- `mapping(bytes32 => Investor) public investorDetails`: Maps the `id` to the `Investor` struct, storing purchase details.
+- `mapping(address => bytes32[]) public investorStocks`: Maps investor addresses to an array of `id`s representing their stock purchases.
 
 ### Events
 
-- `event StockBought(bytes32 buyerID, address buyerAddress, string stock, uint256 quantity, uint256 price)`: Emitted when a stock is purchased.
-- `event StockSold(bytes32 buyerID, address buyerAddress, string stock, uint256 quantity)`: Emitted when a stock is sold.
+- `event StockPurchase(bytes32 id, address investor, string stockName, uint256 stockQuantity, uint256 amountPaid)`: Emitted when a stock is purchased.
+- `event StockTransfer(bytes32 id, address investor, string stockName, uint256 stockQuantity)`: Emitted when a stock is transferred.
 
 ### Functions
 
-- **`buyStock(string memory _stock, uint256 _quantity, uint256 _price, uint256 _mobileNumber) public returns (bytes32)`**:
-  Allows users to buy a stock and returns a unique `buyerID`.
+- **`purchaseStock(string memory _stockName, uint256 _stockQuantity, uint256 _amountPaid, uint256 _contactNumber) public returns (bytes32)`**:
+  Allows investors to purchase a stock and returns a unique `id`.
 
-- **`sellStock(bytes32 _buyerID) public`**:
-  Allows users to mark a stock as sold using the `buyerID`.
+- **`transferStock(bytes32 _id) public`**:
+  Allows investors to mark a stock as transferred using its `id`.
 
-- **`getStockDetails(bytes32 _buyerID) public view returns (Buyer memory)`**:
-  Retrieves details of a specific stock purchase using the `buyerID`.
+- **`viewStockDetails(bytes32 _id) public view returns (Investor memory)`**:
+  Retrieves details of a specific stock purchase using its `id`.
 
-- **`getUserStocks(address _user) public view returns (Buyer[] memory)`**:
-  Retrieves all stocks purchased by a specific user.
+- **`viewInvestorStocks(address _investor) public view returns (Investor[] memory)`**:
+  Retrieves all stocks purchased by a specific investor.
 
 ## Usage
 
-1. **Buying Stocks**:
-   Call the `buyStock` function with the stock name, quantity, price, and mobile number. This will generate a unique `buyerID` and store the purchase details.
+1. **Purchasing Stocks**:
+   Call the `purchaseStock` function with the stock name, quantity, amount paid, and contact number. This generates a unique `id` and stores the purchase details.
 
-2. **Selling Stocks**:
-   Call the `sellStock` function with the `buyerID` of the stock you want to mark as sold.
+2. **Transferring Stocks**:
+   Call the `transferStock` function with the `id` of the stock you want to mark as transferred.
 
-3. **Getting Stock Details**:
-   Call the `getStockDetails` function with the `buyerID` to get details of a specific stock purchase.
+3. **Viewing Stock Details**:
+   Call the `viewStockDetails` function with the `id` to retrieve details of a specific stock purchase.
 
-4. **Getting User Stocks**:
-   Call the `getUserStocks` function with the user's address to get all stocks purchased by that user.
+4. **Viewing Investor Stocks**:
+   Call the `viewInvestorStocks` function with the investor's address to retrieve all stocks purchased by that investor.
 
 ## Security Considerations
 
-- **Ensure Unique IDs**: The contract uses a combination of `block.timestamp`, `msg.sender`, and a counter to generate unique `buyerID`s. This method helps avoid collisions but should be reviewed for security.
-- **Access Control**: Consider implementing additional access control mechanisms to restrict who can buy or sell stocks.
+- **Unique IDs**: The contract generates unique IDs using a combination of `block.timestamp`, `msg.sender`, and an incrementing counter. This approach reduces the likelihood of ID collisions but should be reviewed for robustness.
+- **Access Control**: Implement additional access control mechanisms if needed to restrict stock transfers or other sensitive operations.
 
 ## Developer Details
 
-Name: Abhijeet Kumar Jha
-Email : abhijeetjha0809@gmail.com
-Github UserName : ABHIJEETJHA0102
+- **Name**: Abhijeet Kumar Jha
+- **Email**: abhijeetjha0809@gmail.com
+- **GitHub**: [ABHIJEETJHA0102](https://github.com/ABHIJEETJHA0102)
 
 ## Deployment Details
-Chain : EduChain
-Contract Id : 0xa47c8bde1c76b5a5e9c3af7b0b2d4c2e7f5c9e4a
+
+- **Chain**: EduChain
+- **Contract ID**: 0xa47c8bde1c76b5a5e9c3af7b0b2d4c2e7f5c9e4a
 
 ![Contract Details](image.png)
