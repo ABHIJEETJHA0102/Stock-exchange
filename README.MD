@@ -1,7 +1,7 @@
 
 # StockTokenization Smart Contract
 
-[ Details](desc.jpg)
+![ Details](desc.jpg)
 
 ## Overview
 
