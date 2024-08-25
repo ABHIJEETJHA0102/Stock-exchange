@@ -1,7 +1,7 @@
 # TokenizedStockBuying Smart Contract
 
 
-![ Details](desc.jpeg)
+![ Details](desc.jpg)
 
 
 ## Overview
